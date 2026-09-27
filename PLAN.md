@@ -24,6 +24,28 @@ parámetros) y solo lo que demuestre ventaja pasa a la siguiente escala.
 
 ---
 
+## 0.5 Vía personal (lo que ya está construido)
+
+Para **uso personal** no hace falta entrenar desde cero: el paquete `agentx/` implementa
+las ideas de AgentX-Core **a nivel de sistema** sobre un modelo abierto local (Ollama):
+
+| Idea de AgentX-Core | Implementación actual |
+|---------------------|-----------------------|
+| 4. Memoria persistente | `memory.py`: SQLite + FTS5; aprende hechos tras cada intercambio y los inyecta por relevancia |
+| 3 + 6. Pensar → comprobar → corregir | `reasoning.py`: verificador + revisión (modo `/pensar`) |
+| 6. Verificación neuro-simbólica | `tools.py`: ejecución real de Python para cálculos y código |
+| Núcleo | modelo abierto intercambiable (`qwen3:8b` por defecto) |
+
+Siguientes pasos de esta vía:
+1. **Búsqueda web local** opcional (SearXNG) para datos actuales.
+2. **Documentos propios** (RAG): indexar tus PDFs y notas con embeddings locales.
+3. **Autoconsistencia**: varias respuestas en paralelo y votación del verificador.
+4. **Ajuste fino con LoRA** sobre tus conversaciones buenas (las que marques) para que el
+   modelo se adapte a ti — aquí entra la Fase 2 del plan a pequeña escala.
+5. Sustituir piezas por los componentes experimentales de la Fase 1 cuando demuestren ventaja.
+
+---
+
 ## 1. La arquitectura imaginada: **AgentX-Core**
 
 Idea central: un modelo que **no piensa en tokens, sino en un espacio latente**, que
